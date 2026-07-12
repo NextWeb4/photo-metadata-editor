@@ -1,0 +1,54 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*token*
+*secret*
+*credentials*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build and release output
+build/
+dist/
+release/
+release-assets/
+target/
+bin/
+obj/
+*.spec
+
+# JavaScript and web caches
+node_modules/
+.cache/
+.turbo/
+.next/cache/
+
+# Logs, temporary files and editor state
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+*_original
+*_before_restore*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.learnings/

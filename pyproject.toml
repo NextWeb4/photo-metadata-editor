@@ -1,0 +1,21 @@
+[project]
+name = "photo-meta-editor"
+version = "0.1.2"
+description = "Windows desktop EXIF/XMP/IPTC metadata editor powered by ExifTool."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+dependencies = ["tkinterdnd2>=0.4.4"]
+authors = [{ name = "HaoXiang Huang", email = "didadida1688@gmail.com" }]
+maintainers = [{ name = "HaoXiang Huang", email = "didadida1688@gmail.com" }]
+urls = { Homepage = "https://nextweb4.github.io" }
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.0", "cx_Freeze>=7.2,<8"]
+ocr = ["pytesseract>=0.3.13", "winsdk>=1.0.0b10"]
+
+[project.scripts]
+photo-meta-editor = "photo_meta_editor.__main__:main"
+
+[tool.pyinstaller]
+name = "PhotoMetaEditor"
