@@ -1,133 +1,109 @@
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+
 # Photo Metadata Editor
 
-[English](#english) | [中文](#中文)
+An offline Windows desktop editor for EXIF, XMP, IPTC, and QuickTime metadata, powered by a bundled ExifTool runtime.
 
-## 中文
+[![Last commit](https://img.shields.io/github/last-commit/NextWeb4/photo-metadata-editor?style=flat-square)](https://github.com/NextWeb4/photo-metadata-editor/commits/main)
+[![Repository size](https://img.shields.io/github/repo-size/NextWeb4/photo-metadata-editor?style=flat-square)](https://github.com/NextWeb4/photo-metadata-editor)
+[![GitHub stars](https://img.shields.io/github/stars/NextWeb4/photo-metadata-editor?style=flat-square)](https://github.com/NextWeb4/photo-metadata-editor)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+[![MIT License](https://img.shields.io/github/license/NextWeb4/photo-metadata-editor?style=flat-square)](LICENSE)
 
-### 项目简介
+## Features
 
-Photo Metadata Editor 是一个离线 Windows 桌面工具，使用 Tkinter 提供图形界面，并通过内置的 ExifTool 读取和修改 EXIF、XMP、IPTC 与 QuickTime 元数据。项目不会上传图片或元数据，也不会在运行时自动下载 OCR 模型。
+- Opens common media formats including JPG, PNG, TIFF, HEIC, HEIF, WEBP, MOV, and MP4.
+- Edits titles, descriptions, keywords, creators, copyright, capture time, camera, software, GPS, and location fields.
+- Shows read-only facts such as format, dimensions, megapixels, lens, ISO, focal length, aperture, and shutter speed.
+- Provides camera and GPS presets, a dark theme, local OCR date detection, and optional file-time synchronization.
+- Switches between Chinese and English and stores the preference in `%APPDATA%\PhotoMetadataEditor\settings.json`.
+- Keeps ExifTool `_original` backups by default and creates a checked `_before_restore` copy before restoration.
+- Verifies ExifTool's write summary and reads important fields back instead of treating a zero exit code as proof of success.
+- Processes files locally; it does not upload photos or metadata and does not download OCR models at runtime.
 
-### 功能特点
+## Install a Release
 
-- 支持 JPG、PNG、TIFF、HEIC、HEIF、WEBP、MOV、MP4 等常见媒体文件。
-- 编辑标题、描述、关键词、作者、版权、拍摄时间、相机、软件、GPS 与地点字段。
-- 显示文件格式、尺寸、像素、镜头、ISO、焦距、光圈、快门等只读照片参数。
-- 支持相机和 GPS 预设、暗色模式、本地 OCR 时间识别与文件时间同步。
-- 中文/English 界面切换；桌面版将语言选择保存在 `%APPDATA%\PhotoMetadataEditor\settings.json`。
-- 默认保留 ExifTool `_original` 备份；恢复前另存 `_before_restore`，并提供校验与失败回滚。
-- 写入后检查 ExifTool 摘要和关键字段读回结果，避免把未写入误报为成功。
+Download the release artifacts from [GitHub Releases](https://github.com/NextWeb4/photo-metadata-editor/releases):
 
-### 安装方法
+- `PhotoMetadataEditor-0.1.2-win64.msi`: Windows installer.
+- `PhotoMetaEditor-portable.zip`: portable distribution; extract every file and run `PhotoMetaEditor.exe`.
+- `SHA256SUMS.txt`: checksums for release files.
 
-从 [GitHub Releases](https://github.com/NextWeb4/photo-metadata-editor/releases) 下载：
+Do not download `PhotoMetaEditor.exe` by itself: it requires the adjacent `_internal` and `exiftool` payload from the portable ZIP. Public artifacts are unsigned when no trusted code-signing certificate is configured, so Windows may show an unknown-publisher warning. Verify the checksum before running a downloaded package.
 
-- `PhotoMetadataEditor-0.1.2-win64.msi`：Windows 安装包。
-- `PhotoMetaEditor-portable.zip`：免安装便携版，解压后运行其中的 `PhotoMetaEditor.exe`。
-- `SHA256SUMS.txt`：下载文件校验值。
+## Run From Source
 
-当前公开构建未配置商业代码签名证书，因此保持未签名；Windows 可能显示未知发布者。项目不会创建自签名证书冒充可信签名。
-
-### 使用方法
-
-1. 打开软件并点击“选择”，或把图片/视频拖入窗口。
-2. 修改左侧可编辑字段；右侧可筛选查看全部原始元数据。
-3. 根据需要选择相机/GPS 预设、OCR 时间或同步文件时间。
-4. 点击“保存修改”。首次写入默认生成 `_original` 备份。
-5. 需要回退时点击“恢复备份”并确认。
-
-源码运行：
+Python 3.11 or newer is declared in `pyproject.toml`. The desktop dependency is `tkinterdnd2`; the required ExifTool Windows runtime is checked into `vendor/exiftool/`.
 
 ```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install -e .
 $env:PYTHONPATH = "src"
-python -m photo_meta_editor
+.venv\Scripts\python -m photo_meta_editor
 ```
 
-### 测试与打包
+OCR support is optional. Available local backends depend on the source environment and installed Windows OCR/Tesseract/PaddleOCR resources. The application must not fetch models or send images to a cloud OCR service.
+
+## Use the Editor
+
+1. Select a file or drag an image/video into the window.
+2. Edit supported fields on the left and inspect or filter raw metadata on the right.
+3. Optionally apply a camera/GPS preset, detect a date with a local OCR backend, or enable file-time synchronization.
+4. Choose **Save changes**. The first write keeps an `_original` backup by default.
+5. Use **Restore backup** only after reviewing the confirmation prompt.
+
+The application supports many media containers, but actual write support also depends on the file, its permissions, and ExifTool's capabilities. A successful write is reported only after summary and read-back checks pass.
+
+## Project Structure
+
+| Path | Responsibility |
+| --- | --- |
+| `src/photo_meta_editor/app.py` | Tkinter interface and application coordination |
+| `src/photo_meta_editor/exiftool.py` | Safe ExifTool process invocation and read/write handling |
+| `src/photo_meta_editor/fields.py` | Field/tag mapping, normalization, and validation |
+| `src/photo_meta_editor/ocr.py` | Local OCR backend detection and date parsing |
+| `src/photo_meta_editor/presets.py` | Camera and GPS presets |
+| `src/photo_meta_editor/i18n.py` | Chinese and English UI strings |
+| `src/photo_meta_editor/settings.py` | Local application preferences |
+| `vendor/exiftool/` | Bundled ExifTool Windows runtime |
+| `scripts/` | Packaging, signing, license collection, privacy checks, and path safety |
+| `tests/` | Standard-library `unittest` regression suite |
+
+## Test
 
 ```powershell
 $env:PYTHONPATH = "src"
 python -m unittest discover -s tests
+```
+
+## Build
+
+```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\build_release.ps1
 ```
 
-完整发布构建会执行编译检查、单元测试、EXE/MSI/ZIP 构建、许可证完整性检查和隐私扫描。如果发布者持有受信代码签名证书，可设置 `PHOTO_META_EDITOR_SIGNING_CERT_THUMBPRINT`；未设置时产物保持未签名。
-
-主要产物：
+The release build performs compilation checks, unit tests, EXE/MSI/ZIP packaging, third-party license validation, and privacy scans. Its documented outputs are:
 
 - `dist\PhotoMetaEditor\PhotoMetaEditor.exe`
 - `dist\PhotoMetadataEditor-0.1.2-win64.msi`
 - `dist\PhotoMetaEditor-portable.zip`
 
-### 作者信息
+A publisher with a trusted certificate may set `PHOTO_META_EDITOR_SIGNING_CERT_THUMBPRINT`. When it is unset, artifacts must remain unsigned; the build does not create a self-signed certificate to imitate trusted signing.
 
-- 作者：[HaoXiang Huang](https://nextweb4.github.io/)
-- 邮箱：[didadida1688@gmail.com](mailto:didadida1688@gmail.com)
-- 主页：[https://nextweb4.github.io/](https://nextweb4.github.io/)
-- GitHub：[https://github.com/NextWeb4](https://github.com/NextWeb4)
+## Privacy and Distribution
 
-### License
+- Do not add background uploads, telemetry, cloud OCR, or runtime model downloads.
+- Frozen EXE/MSI builds must use the bundled ExifTool rather than a user-controlled binary from `PATH` or `PHOTO_META_EDITOR_EXIFTOOL`.
+- Distribution packages must include the collected project and third-party notices.
+- Packaging privacy checks cover local paths and development artifacts; a privacy scan does not replace license-completeness checks.
 
-项目源码使用 [MIT License](LICENSE)。分发包内置的 ExifTool、tkinterdnd2、PyInstaller、cx_Freeze 等第三方组件继续遵循各自许可证；详见 [第三方说明](docs/THIRD_PARTY.md)。
+See [`docs/THIRD_PARTY.md`](docs/THIRD_PARTY.md) and [`docs/OPEN_SOURCE_AUDIT.md`](docs/OPEN_SOURCE_AUDIT.md) for the repository's detailed dependency record.
 
-## English
+## Author
 
-### Overview
+- [HaoXiang Huang](https://nextweb4.github.io/)
+- [didadida1688@gmail.com](mailto:didadida1688@gmail.com)
 
-Photo Metadata Editor is an offline Windows desktop application built with Tkinter and the bundled ExifTool. It reads and edits EXIF, XMP, IPTC, and QuickTime metadata without uploading images or metadata and without downloading OCR models at runtime.
+## License
 
-### Features
-
-- Supports common media formats including JPG, PNG, TIFF, HEIC, HEIF, WEBP, MOV, and MP4.
-- Edits title, description, keywords, creator, copyright, capture time, camera, software, GPS, and location fields.
-- Shows read-only photo facts such as dimensions, megapixels, lens, ISO, focal length, aperture, and shutter speed.
-- Includes camera/GPS presets, dark mode, local OCR date detection, and file-time synchronization.
-- Switches between Chinese and English; the desktop language preference is stored in `%APPDATA%\PhotoMetadataEditor\settings.json`.
-- Preserves ExifTool `_original` backups and creates a verified `_before_restore` copy before a restore.
-- Verifies ExifTool summaries and reads important values back after writing.
-
-### Installation
-
-Download from [GitHub Releases](https://github.com/NextWeb4/photo-metadata-editor/releases):
-
-- `PhotoMetadataEditor-0.1.2-win64.msi`: Windows installer.
-- `PhotoMetaEditor-portable.zip`: portable package; extract it and run `PhotoMetaEditor.exe`.
-- `SHA256SUMS.txt`: SHA-256 checksums for the release files.
-
-Public builds remain unsigned when no trusted commercial code-signing certificate is configured. Windows may therefore show an unknown-publisher warning. The project does not create a self-signed certificate to imitate trusted signing.
-
-### Usage
-
-1. Open the application and select a file, or drop an image/video into the window.
-2. Edit fields on the left and inspect/filter all raw metadata on the right.
-3. Optionally apply camera/GPS presets, detect a time with local OCR, or synchronize file times.
-4. Select **Save changes**. The first write keeps an `_original` backup by default.
-5. Use **Restore backup** and confirm when a rollback is needed.
-
-Run from source:
-
-```powershell
-$env:PYTHONPATH = "src"
-python -m photo_meta_editor
-```
-
-### Testing and packaging
-
-```powershell
-$env:PYTHONPATH = "src"
-python -m unittest discover -s tests
-powershell -ExecutionPolicy Bypass -File .\scripts\build_release.ps1
-```
-
-The release build performs compilation checks, unit tests, EXE/MSI/ZIP packaging, license validation, and privacy scans. A publisher with a trusted code-signing certificate may set `PHOTO_META_EDITOR_SIGNING_CERT_THUMBPRINT`; otherwise artifacts remain unsigned.
-
-### Author
-
-- Author: [HaoXiang Huang](https://nextweb4.github.io/)
-- Email: [didadida1688@gmail.com](mailto:didadida1688@gmail.com)
-- Website: [https://nextweb4.github.io/](https://nextweb4.github.io/)
-- GitHub: [https://github.com/NextWeb4](https://github.com/NextWeb4)
-
-### License
-
-The project source is released under the [MIT License](LICENSE). Bundled third-party components retain their own licenses; see [Third-party notices](docs/THIRD_PARTY.md).
+The project source is released under the [MIT License](LICENSE). Bundled components, including ExifTool and its Windows runtime, retain their own licenses; preserve all accompanying notices when redistributing the application.
