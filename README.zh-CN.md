@@ -1,4 +1,8 @@
-[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+<p align="center">
+  <a href="README.md"><img src="https://img.shields.io/badge/English-0969da?style=flat-square" alt="English"></a>
+  <a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-c8102e?style=flat-square" alt="简体中文"></a>
+  <a href="README.ja.md"><img src="https://img.shields.io/badge/%E6%97%A5%E6%9C%AC%E8%AA%9E-8250df?style=flat-square" alt="日本語"></a>
+</p>
 
 # 照片元数据编辑器
 
@@ -20,6 +24,14 @@
 - 默认保留 ExifTool `_original` 备份；恢复前创建并校验 `_before_restore` 副本。
 - 检查 ExifTool 写入摘要并回读关键字段，不会只根据退出码判断成功。
 - 全程在本机处理文件，不上传图片或元数据，也不在运行时下载 OCR 模型。
+
+## 环境要求与兼容性
+
+- **操作系统：**内置 ExifTool runtime、支持拖放的桌面应用、打包脚本和 MSI 均面向 Windows。
+- **Python：**`pyproject.toml` 要求 Python 3.11 或更高版本，并将 `tkinterdnd2` 声明为桌面依赖。
+- **ExifTool：**源码和打包版本均依赖 `vendor/exiftool/` 中已提交的 Windows runtime；冻结构建不会改用 `PATH` 中的可执行文件。
+- **可选 OCR：**可用性取决于本机 Windows OCR 语言、Tesseract 或本地安装的 PaddleOCR 资源。项目不提供云端回退，也不会在运行时下载模型。
+- **媒体写入：**能够读取某种格式并不表示所有标签都可写；仍受容器支持、文件系统权限和 ExifTool 标签表限制。
 
 ## 安装发布包
 
@@ -53,6 +65,14 @@ OCR 是可选功能。可用后端取决于源码环境中已安装的 Windows O
 5. 需要回退时，在确认提示后使用“恢复备份”。
 
 应用支持多种媒体容器，但实际写入能力仍取决于文件本身、文件权限和 ExifTool 支持情况。只有摘要检查和关键字段回读均通过时，才会报告写入成功。
+
+## 写入与恢复安全
+
+- 常规写入会保留 ExifTool 的 `_original` 备份，除非用户明确修改该行为。
+- 恢复前会创建并校验 `_before_restore` 副本，检测并发文件变化，并在校验失败后回滚。
+- GPS 纬度和经度是一个成对值；修改时必须同时写入或清除，不能留下只更新一半的地点信息。
+- ExifTool 参数以结构化输入传递；Unicode 路径、空格、反斜杠和多行内容必须始终作为数据，而不能变成命令语法。
+- 当 ExifTool 报告 `0 image files updated` 时，即使进程退出码为 0 也不能视为成功；应用还会检查摘要并回读关键字段。
 
 ## 项目结构
 
@@ -98,6 +118,18 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build_release.ps1
 - 打包隐私扫描会检查本机路径和开发产物，但不能代替许可证完整性检查。
 
 依赖详情见 [`docs/THIRD_PARTY.md`](docs/THIRD_PARTY.md) 和 [`docs/OPEN_SOURCE_AUDIT.md`](docs/OPEN_SOURCE_AUDIT.md)。
+
+## 项目状态与限制
+
+- 这是一个活跃的公开 Windows 应用，已记录 0.1.2 版本的 MSI 和 portable 发布产物。
+- OCR 是可选的本地能力；后端不可用时会明确不可用，而不会静默切换到网络服务。
+- 静态图片与 QuickTime 容器的读写覆盖并不完全一致，GPS 和日期标签尤其依赖具体格式。
+- 未配置受信任证书时，公开产物保持未签名；SHA-256 只能校验内容完整性，不能证明发布者身份。
+- 仓库包含第三方 ExifTool runtime；项目的 MIT 许可证不能替代其声明和其他打包组件的许可证。
+
+## 参与贡献
+
+请将 Tkinter 协调逻辑保留在 `app.py`，进程调用保留在 `exiftool.py`，字段规则保留在 `fields.py`，OCR 检测保留在 `ocr.py`，打包逻辑保留在 `scripts/`。修改标签、时间、GPS、QuickTime、备份或参数处理时，应补充真实文件回归测试并运行完整 `unittest`。打包改动必须保留路径安全、隐私、runtime 裁剪和许可证收集检查。项目当前没有 lint 或 format 命令。
 
 ## 作者
 

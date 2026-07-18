@@ -21,6 +21,8 @@
 - Build scripts must retain license collection, privacy scans, path-safety checks, and runtime pruning.
 
 ## 5. Code style
+- Keep the centered Shields language selector in all three root READMEs with the exact visible labels `English`, `简体中文`, and `日本語`, linked in that order to `README.md`, `README.zh-CN.md`, and `README.ja.md`; do not replace the SVG labels with browser-translatable text.
+- Keep the three README versions aligned in section order, facts, commands, paths, links, images, numbers, and code fences; translate headings and prose naturally while preserving identifiers.
 - Use typed Python and keep UI, parsing/validation, external-process execution, presets, OCR, and settings in their existing modules.
 - User-visible text must remain centralized in `i18n.py`; update Chinese and English strings together.
 - Application identity and version values come from `src/photo_meta_editor/metadata.py`, not duplicate literals.
@@ -46,6 +48,7 @@
 - Release changes build the affected artifact, pass privacy and license checks, and verify version/publisher metadata before optional signing.
 
 ## 9. Review criteria
+- Verify the language selector renders through GitHub without browser-translatable text and all three README versions keep the same facts, commands, links, and images.
 - Review original-file safety, backup atomicity, Unicode/space paths, argument construction, time/GPS normalization, and read-back verification first.
 - Confirm long-running ExifTool/OCR work cannot block or update a destroyed Tk window and has a timeout/error path.
 - Confirm optional OCR remains local and unavailable backends fail clearly without network fallback.

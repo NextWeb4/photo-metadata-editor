@@ -1,4 +1,8 @@
-[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+<p align="center">
+  <a href="README.md"><img src="https://img.shields.io/badge/English-0969da?style=flat-square" alt="English"></a>
+  <a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-c8102e?style=flat-square" alt="简体中文"></a>
+  <a href="README.ja.md"><img src="https://img.shields.io/badge/%E6%97%A5%E6%9C%AC%E8%AA%9E-8250df?style=flat-square" alt="日本語"></a>
+</p>
 
 # Photo Metadata Editor
 
@@ -21,6 +25,14 @@ An offline Windows desktop editor for EXIF, XMP, IPTC, and QuickTime metadata, p
 - Verifies ExifTool's write summary and reads important fields back instead of treating a zero exit code as proof of success.
 - Processes files locally; it does not upload photos or metadata and does not download OCR models at runtime.
 
+## Requirements and Compatibility
+
+- **Operating system:** the bundled ExifTool runtime, drag-and-drop desktop application, packaging scripts, and MSI target Windows.
+- **Python:** `pyproject.toml` requires Python 3.11 or newer and declares `tkinterdnd2` as the desktop dependency.
+- **ExifTool:** source and packaged runs depend on the checked-in Windows runtime under `vendor/exiftool/`; frozen builds do not substitute an executable from `PATH`.
+- **Optional OCR:** availability depends on local Windows OCR languages, Tesseract, or locally installed PaddleOCR resources. The project provides no cloud fallback and performs no runtime model download.
+- **Media writes:** a format being readable does not guarantee that every tag is writable. Container support, filesystem permissions, and ExifTool's tag tables still apply.
+
 ## Install a Release
 
 Download the release artifacts from [GitHub Releases](https://github.com/NextWeb4/photo-metadata-editor/releases):
@@ -29,7 +41,7 @@ Download the release artifacts from [GitHub Releases](https://github.com/NextWeb
 - `PhotoMetaEditor-portable.zip`: portable distribution; extract every file and run `PhotoMetaEditor.exe`.
 - `SHA256SUMS.txt`: checksums for release files.
 
-Do not download `PhotoMetaEditor.exe` by itself: it requires the adjacent `_internal` and `exiftool` payload from the portable ZIP. Public artifacts are unsigned when no trusted code-signing certificate is configured, so Windows may show an unknown-publisher warning. Verify the checksum before running a downloaded package.
+Do not download `PhotoMetaEditor.exe` by itself: it requires the adjacent `_internal` and `exiftool` payload from the portable ZIP. Public artifacts are unsigned when no trusted code-signing certificate is configured, so Windows may show an unknown-publisher warning. Verify the SHA-256 checksum before running a downloaded package.
 
 ## Run From Source
 
@@ -53,6 +65,14 @@ OCR support is optional. Available local backends depend on the source environme
 5. Use **Restore backup** only after reviewing the confirmation prompt.
 
 The application supports many media containers, but actual write support also depends on the file, its permissions, and ExifTool's capabilities. A successful write is reported only after summary and read-back checks pass.
+
+## Write and Restore Safety
+
+- Normal writes keep ExifTool's `_original` backup unless the user explicitly changes that behavior.
+- Restoration first creates and verifies a `_before_restore` copy, detects concurrent file changes, and rolls back after failed verification.
+- GPS latitude and longitude form one value pair; changes must write or clear both together rather than leave a half-updated location.
+- ExifTool arguments are passed as structured input. Unicode paths, whitespace, backslashes, and multiline values must remain data rather than command syntax.
+- A zero process exit code is insufficient when ExifTool reports `0 image files updated`; the application verifies the summary and reads important fields back.
 
 ## Project Structure
 
@@ -98,6 +118,18 @@ A publisher with a trusted certificate may set `PHOTO_META_EDITOR_SIGNING_CERT_T
 - Packaging privacy checks cover local paths and development artifacts; a privacy scan does not replace license-completeness checks.
 
 See [`docs/THIRD_PARTY.md`](docs/THIRD_PARTY.md) and [`docs/OPEN_SOURCE_AUDIT.md`](docs/OPEN_SOURCE_AUDIT.md) for the repository's detailed dependency record.
+
+## Project Status and Limitations
+
+- This is an active, public Windows application with documented version 0.1.2 MSI and portable release artifacts.
+- OCR is optional and local; an unavailable backend fails as unavailable rather than silently switching to a network service.
+- Read and write coverage varies across still-image and QuickTime containers, especially for GPS and date tags.
+- Published artifacts remain unsigned when no trusted certificate is configured. SHA-256 checks verify content integrity but not publisher identity.
+- The repository includes a third-party ExifTool runtime. Project MIT licensing does not replace its notices or the licenses of packaged components.
+
+## Contributing
+
+Keep Tkinter coordination in `app.py`, process invocation in `exiftool.py`, field rules in `fields.py`, OCR detection in `ocr.py`, and packaging logic under `scripts/`. Add real-file regression coverage for tag, time, GPS, QuickTime, backup, or argument changes; then run the complete `unittest` suite. Packaging work must retain path-safety, privacy, runtime-pruning, and license-collection checks. No lint or formatter command is currently declared.
 
 ## Author
 
