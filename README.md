@@ -81,6 +81,7 @@ The application supports many media containers, but actual write support also de
 | `src/photo_meta_editor/app.py` | Tkinter interface and application coordination |
 | `src/photo_meta_editor/exiftool.py` | Safe ExifTool process invocation and read/write handling |
 | `src/photo_meta_editor/fields.py` | Field/tag mapping, normalization, and validation |
+| `src/photo_meta_editor/metadata.py` | Application identity and version metadata |
 | `src/photo_meta_editor/ocr.py` | Local OCR backend detection and date parsing |
 | `src/photo_meta_editor/presets.py` | Camera and GPS presets |
 | `src/photo_meta_editor/i18n.py` | Chinese and English UI strings |

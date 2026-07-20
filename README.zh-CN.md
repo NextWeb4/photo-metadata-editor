@@ -81,6 +81,7 @@ OCR 是可选功能。可用后端取决于源码环境中已安装的 Windows O
 | `src/photo_meta_editor/app.py` | Tkinter 界面和应用协调 |
 | `src/photo_meta_editor/exiftool.py` | 安全调用 ExifTool 并处理读写 |
 | `src/photo_meta_editor/fields.py` | 字段/标签映射、规范化和校验 |
+| `src/photo_meta_editor/metadata.py` | 应用身份与版本元数据 |
 | `src/photo_meta_editor/ocr.py` | 本地 OCR 后端检测和日期解析 |
 | `src/photo_meta_editor/presets.py` | 相机和 GPS 预设 |
 | `src/photo_meta_editor/i18n.py` | 中英文 UI 文案 |

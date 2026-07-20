@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## 1. Project structure
-- Application code lives in `src/photo_meta_editor/`: `app.py` is the Tkinter UI, `exiftool.py` owns ExifTool calls, `fields.py` owns mappings/validation, `ocr.py` owns local OCR detection, and `presets.py`, `i18n.py`, and `settings.py` own their named concerns.
+- Application code lives in `src/photo_meta_editor/`: `app.py` is the Tkinter UI, `exiftool.py` owns ExifTool calls, `fields.py` owns mappings/validation, `metadata.py` owns application identity/version metadata, `ocr.py` owns local OCR detection, and `presets.py`, `i18n.py`, and `settings.py` own their named concerns.
 - `vendor/exiftool/` is the bundled runtime. Treat it as third-party content.
 - `scripts/` owns EXE/MSI/release packaging, signing, license collection, privacy scanning, runtime pruning, version resources, and path-safety checks. Tests live in `tests/`.
 
