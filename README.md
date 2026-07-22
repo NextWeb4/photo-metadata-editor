@@ -1,6 +1,3 @@
-
-
-
 <p align="center">
   <a href="README.md"><img src="https://img.shields.io/badge/English-0969da?style=flat-square" alt="English"></a>
   <a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-c8102e?style=flat-square" alt="简体中文"></a>
@@ -143,3 +140,5 @@ Keep Tkinter coordination in `app.py`, process invocation in `exiftool.py`, fiel
 ## License
 
 The project source is released under the [MIT License](LICENSE). Bundled components, including ExifTool and its Windows runtime, retain their own licenses; preserve all accompanying notices when redistributing the application.
+
+

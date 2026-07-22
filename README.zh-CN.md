@@ -1,6 +1,3 @@
-
-
-
 <p align="center">
   <a href="README.md"><img src="https://img.shields.io/badge/English-0969da?style=flat-square" alt="English"></a>
   <a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-c8102e?style=flat-square" alt="简体中文"></a>
@@ -143,3 +140,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build_release.ps1
 ## 许可证
 
 项目源码采用 [MIT License](LICENSE)。内置组件（包括 ExifTool 及其 Windows runtime）保留各自许可证；重新分发时必须保留随附声明。
+
+
