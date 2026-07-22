@@ -1,3 +1,6 @@
+
+
+
 import unittest
 import tomllib
 from pathlib import Path
@@ -9,7 +12,7 @@ from scripts.generate_windows_version_info import render_version_info, version_t
 class MetadataTests(unittest.TestCase):
     def test_creator_contact_metadata_is_available_for_about_and_packaging(self) -> None:
         self.assertEqual(APP_CREATOR, "HaoXiang Huang")
-        self.assertEqual(APP_EMAIL, "didadida1688@gmail.com")
+        self.assertEqual(APP_EMAIL, "Rays688888@Gmail.com")
         self.assertEqual(APP_WEBSITE, "https://nextweb4.github.io")
 
     def test_pyproject_version_matches_application_metadata(self) -> None:

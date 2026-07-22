@@ -1,3 +1,6 @@
+
+
+
 # Initial Clean Release v0.1.2
 
 ## 中文
@@ -14,7 +17,7 @@ Photo Metadata Editor v0.1.2 是一个离线 Windows EXIF/XMP/IPTC/QuickTime 元
 公开产物在没有受信商业代码签名证书时保持未签名，Windows 可能显示未知发布者。
 
 作者：HaoXiang Huang  
-邮箱：didadida1688@gmail.com  
+邮箱：Rays688888@Gmail.com
 主页：https://nextweb4.github.io/
 
 ## English
@@ -31,5 +34,5 @@ Photo Metadata Editor v0.1.2 is an offline Windows editor for EXIF, XMP, IPTC, a
 Public artifacts remain unsigned when no trusted commercial code-signing certificate is available, so Windows may display an unknown-publisher warning.
 
 Author: HaoXiang Huang  
-Email: didadida1688@gmail.com  
+Email: Rays688888@Gmail.com
 Website: https://nextweb4.github.io/

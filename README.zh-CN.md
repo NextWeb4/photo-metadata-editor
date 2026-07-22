@@ -1,3 +1,6 @@
+
+
+
 <p align="center">
   <a href="README.md"><img src="https://img.shields.io/badge/English-0969da?style=flat-square" alt="English"></a>
   <a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-c8102e?style=flat-square" alt="简体中文"></a>
@@ -135,7 +138,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build_release.ps1
 ## 作者
 
 - [HaoXiang Huang](https://nextweb4.github.io/)
-- [didadida1688@gmail.com](mailto:didadida1688@gmail.com)
+- [Rays688888@Gmail.com](mailto:Rays688888@Gmail.com)
 
 ## 许可证
 

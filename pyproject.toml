@@ -1,3 +1,6 @@
+
+
+
 [project]
 name = "photo-meta-editor"
 version = "0.1.2"
@@ -6,8 +9,8 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
 dependencies = ["tkinterdnd2>=0.4.4"]
-authors = [{ name = "HaoXiang Huang", email = "didadida1688@gmail.com" }]
-maintainers = [{ name = "HaoXiang Huang", email = "didadida1688@gmail.com" }]
+authors = [{ name = "HaoXiang Huang", email = "Rays688888@Gmail.com" }]
+maintainers = [{ name = "HaoXiang Huang", email = "Rays688888@Gmail.com" }]
 urls = { Homepage = "https://nextweb4.github.io" }
 
 [project.optional-dependencies]

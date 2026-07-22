@@ -1,3 +1,6 @@
+
+
+
 VSVersionInfo(
   ffi=FixedFileInfo(
     filevers=(0, 1, 2, 0),
@@ -22,7 +25,7 @@ VSVersionInfo(
           StringStruct('OriginalFilename', 'PhotoMetaEditor.exe'),
           StringStruct('ProductName', 'Photo Metadata Editor'),
           StringStruct('ProductVersion', '0.1.2.0'),
-          StringStruct('Comments', 'Creator: HaoXiang Huang; Email: didadida1688@gmail.com; Website: https://nextweb4.github.io')
+          StringStruct('Comments', 'Creator: HaoXiang Huang; Email: Rays688888@Gmail.com; Website: https://nextweb4.github.io')
         ]
       )
     ]),
